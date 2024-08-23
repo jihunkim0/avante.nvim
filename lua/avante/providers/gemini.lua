@@ -5,7 +5,7 @@ local P = require("avante.providers")
 ---@class AvanteProviderFunctor
 local M = {}
 
-M.api_key_name = "GROQ_API_KEY"
+M.api_key_name = "GEMINI_API_KEY"
 
 M.has = function()
   return os.getenv(M.api_key_name) and true or false
@@ -57,7 +57,8 @@ M.parse_message = function(opts)
 end
 M.parse_response = function(data_stream, _, opts)
   local json = vim.json.decode(data_stream)
-  opts.on_chunk(json.candidates[1].content.parts[1].text)
+  -- opts.on_chunk(json.candidates[1].content.parts[1].text)
+  opts.on_chunk(tostring(json))
 end
 
 M.parse_curl_args = function(provider, code_opts)
